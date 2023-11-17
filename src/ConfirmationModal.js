@@ -4,13 +4,18 @@ function ConfirmationModal({ isOpen, onClose }, ref) {
   const closeRef = useRef()
   const denyRef = useRef()
   const confirmRef = useRef()
-  useImperativeHandle(ref, () => { 
+  useImperativeHandle(
+    ref, 
+    () => { 
     return { 
       focusCloseBtn: () => closeRef.current.focus(), 
       focusDenyBtn: () => denyRef.current.focus(), 
       focusConfirmBtn: () => confirmRef.current.focus(), 
     }
-  })
+  }, 
+  []
+  )
+
   if (!isOpen) return null    
 
   return ( 
@@ -23,10 +28,10 @@ function ConfirmationModal({ isOpen, onClose }, ref) {
       </div>
       <div className="modal-body">Do you confirm?</div>
       <div className="modal-footer">
-        <button className="confirm-btn" ref={confirmRef} onClick={onClose}>
+        <button className="confirm-btn" ref={confirmRef} onClick={() => onClose(true)}>
           Yes
         </button>
-        <button className="deny-btn" ref={denyRef} onClick={onClose}>
+        <button className="deny-btn" ref={denyRef} onClick={() => onClose(false)}>
           No
         </button>
       </div>
@@ -34,3 +39,5 @@ function ConfirmationModal({ isOpen, onClose }, ref) {
   )
 
 }
+
+export default ConfirmationModal; 
